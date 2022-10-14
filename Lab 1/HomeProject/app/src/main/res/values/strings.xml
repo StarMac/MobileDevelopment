@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HomeProject</string>
+    <string name="anime_text">I like anime</string>
+    <string name="btn_change_text">Change Text</string>
+</resources>
