@@ -41,10 +41,17 @@ class PlaceholderFragment : Fragment() {
         val root = binding.root
 
         val textView: TextView = binding.sectionLabel
+        val btnFirstActivity = binding.btnFirstActivity
         pageViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
+            if (pageViewModel.index.value == 3) {
+                btnFirstActivity.visibility = View.VISIBLE
+            }
+            else {
+                btnFirstActivity.visibility = View.GONE
+            }
         }
-        binding.btnFirstActivity.setOnClickListener{goToDrawerActivity()}
+        btnFirstActivity.setOnClickListener{goToDrawerActivity()}
         return root
     }
 
