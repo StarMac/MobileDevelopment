@@ -1,15 +1,21 @@
 package com.example.homeproject2
 
 import android.os.Bundle
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.example.homeproject2.databinding.ActivityTabbedBinding
+import com.example.homeproject2.ui.ui.tabbed.SectionsPager2Adapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import com.example.homeproject2.databinding.ActivityTabbedBinding
-import com.example.homeproject2.ui.ui.tabbed.SectionsPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
-class TabbedActivity : AppCompatActivity() {
+private val TAB_TITLES = arrayOf(
+    R.string.tab_text_1,
+    R.string.tab_text_2,
+    R.string.tab_text_3
+)
+
+class TabbedActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityTabbedBinding
 
@@ -19,12 +25,13 @@ class TabbedActivity : AppCompatActivity() {
         binding = ActivityTabbedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
+        val sectionsPagerAdapter = SectionsPager2Adapter(this)
+        val viewPager2: ViewPager2 = binding.viewPager2
+        viewPager2.adapter = sectionsPagerAdapter
         val fab: FloatingActionButton = binding.fab
+        TabLayoutMediator(binding.tabs, viewPager2) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
